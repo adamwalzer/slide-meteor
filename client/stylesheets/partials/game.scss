@@ -1,0 +1,36 @@
+.game {
+	width: 100vw;
+	height: 100vh;
+	background-color: $light-grey;
+	position: absolute;
+	left: 0;
+	top: 100vh;
+	@include transition(top $fast);
+
+	&.infinity-game {
+
+		.board {
+
+			> div {
+				@for $i from 1 through 100 {
+					$c: calc-color(($i - 1) % 16 + 1);
+					&[val="#{$i}"] {
+						background-color: rgba($c,.4);
+						color: $c;
+					}
+				}
+			}
+		}
+	}
+
+	&.twist-game {
+
+		.board {
+			@include transition(transform $fast);
+
+			> div span {
+				@include transition(transform $fast);
+			}
+		}
+	}
+}

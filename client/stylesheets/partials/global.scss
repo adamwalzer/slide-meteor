@@ -1,0 +1,43 @@
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+body {
+	text-align: center;
+	position: relative;
+	color: $color1;
+	font-size: 32px;
+
+	&.original {
+		.original-game {
+			top: 0;
+		}
+	}
+
+	&.infinity {
+		.infinity-game {
+			top: 0;
+		}
+	}
+
+	&.twist {
+		.twist-game {
+			top: 0;
+		}
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.wrapper {
+	@include wrapper;
+}

@@ -1,0 +1,39 @@
+.board {
+	width: 100%;
+	height: 0;
+	padding-bottom: 100%;
+	background-color: $board-color;
+	position: relative;
+
+	> div {
+		position: absolute;
+		background-color: $white;
+		width: 25%;
+		height: 0;
+		padding-bottom: 25%;
+		vertical-align: middle;
+		text-align: center;
+		@include transition(left $fast, top $fast, color $fast, opacity $fast);
+
+		&.destroying {
+			opacity: 0;
+		}
+
+		@for $i from 1 through 16 {
+			$v: expon(2,$i);
+			$c: calc-color($i);
+			&[val="#{$v}"] {
+				background-color: rgba($c,.4);
+				color: $c;
+			}
+		}
+
+		span {
+			display: inline-block;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			@include transform(translateX(-50%) translateY(-50%));
+		}
+	}
+}
