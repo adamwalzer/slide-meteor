@@ -1,8 +1,51 @@
 <template name="twistGame">
 	<div class="twist-game game">
-		<a href="">back</a>
+		<div class="menu">
+			<a href="">
+				<span></span>
+				<span></span>
+				<span></span>
+			</a>
+			<span class="reset"></span>
+		</div>
 		<div class="title">{{title}}</div>
-		<div class="score">{{score}}</div>
+		<div class="score">
+			<span>
+				score
+				{{score}}
+			</span>
+			<span>
+				high
+				{{high}}
+			</span>
+		</div>
 		<div class="board"></div>
+		<div class="reset-menu">
+			<h1>
+				Reset Game?
+			</h1>
+			<ul>
+				<li class="yes">
+					Yes
+				</li>
+				<li class="no">
+					No
+				</li>
+			</ul>
+		</div>
+		<div class="game-over-menu">
+			<h1></h1>
+			<h2>
+				Play Again?
+			</h2>
+			<ul>
+				<li class="yes">
+					Yes
+				</li>
+				<li class="no">
+					No
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>

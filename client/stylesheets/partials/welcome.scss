@@ -6,35 +6,4 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-
-	h1 {
-		font-size: 54px;
-		margin-bottom: 40px;
-		color: $color1;
-	}
-
-	ul {
-		padding: 20px;
-
-		li {
-			display: block;
-			background-color: $grey;
-			border-radius: 20px;
-			margin-bottom: 20px;
-			font-size: 32px;
-
-			a {
-				padding: 15px;
-				display: block;
-			}
-
-			@for $i from 1 through 6 {
-				$c: calc-color($i);
-				&:nth-child(#{$i}) {
-					background-color: rgba($c,.4);
-					color: $c;
-				}
-			}
-		}
-	}
 }

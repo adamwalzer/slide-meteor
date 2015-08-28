@@ -6,7 +6,6 @@ var b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,n
 
 var PieceView = function(opts) {
 	this.initialize = function(opts) {
-		console.log("piece");
 		var opts = opts || {};
 		this.w = opts.w/4 || 80;
 		this.x = opts.x || 0;
@@ -123,7 +122,10 @@ var createPiece = function() {
 			});
 		});
 		if(!alive) {
-			alert("No more moves. Your score is "+Session.get('twist-score'));
+			var $p = $el.parent();
+			$p.find('.game-over-menu h1').html("You scored "+Session.get('twist-score')+"!");
+			$p.addClass('game-over');
+			// alert("No more moves. Your score is "+Session.get('twist-score'));
 		}
 	}
 	// this.values = [];
@@ -312,6 +314,7 @@ var keyAction = function(e) {
 
 Template.twistGame.created = function() {
 	Session.set('twist-score', 0);
+	if(!Session.get('twist-high-score')) Session.set('twist-high-score',0);
 };
 
 Template.twistGame.rendered = function() {
@@ -327,11 +330,36 @@ Template.twistGame.helpers({
 	score: function() {
 		return Session.get('twist-score');
 	},
+	high: function() {
+		return Session.get('twist-high-score');
+	},
 	title: function() {
 		return "Slide - Twist";
 	}
 });
 
 Template.twistGame.events({
-
+	'click .reset-menu .yes, click .game-over-menu .yes': function() {
+		Session.set('twist-high-score', Math.max(Session.get('twist-score'),Session.get('twist-high-score')));
+		Session.set('twist-score', 0);
+		_.each(b, function(c) {
+			_.each(c, function(d) {
+				d && d.destroy();
+			});
+		});
+		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+		createPiece();
+	},
+	'click .reset-menu li': function() {
+		$el.parent().removeClass('reset-open');
+	},
+	'click .reset': function() {
+		$el.parent().addClass('reset-open');
+	},
+	'click .game-over-menu li': function() {
+		$el.parent().removeClass('game-over');
+	},
+	'click .game-over-menu .no': function() {
+		$('body').removeClass('twist');
+	}
 });

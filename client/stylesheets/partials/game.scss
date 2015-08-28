@@ -6,6 +6,7 @@
 	left: 0;
 	top: 100vh;
 	@include transition(top $fast);
+	overflow: hidden;
 
 	&.infinity-game {
 
@@ -32,5 +33,75 @@
 				@include transition(transform $fast);
 			}
 		}
+	}
+
+	.reset-menu, .game-over-menu {
+		width: 100vw;
+		height: 100vh;
+		background-color: $light-grey;
+		position: absolute;
+		left: 0;
+		top: -100vh;
+		@include transition(top $fast);
+		padding-top: 100px;
+
+		ul {
+			li {
+				padding: 15px;
+			}
+		}
+	}
+
+	&.reset-open {
+		.reset-menu {
+			top: 0;
+		}
+	}
+
+	&.game-over {
+		.game-over-menu {
+			top: 0;
+		}
+	}
+
+	.menu {
+		text-align: left;
+
+		a {
+			display: inline-block;
+			height: 40px;
+			width: 40px;
+			position: relative;
+
+			span {
+				display: inline-block;
+				background-color: $color1;
+				border-radius: 2px;
+				height: 4px;
+				width: 100%;
+				position: absolute;
+				left: 10px;
+				top: 10px;
+
+				&:nth-child(2) {
+					top: 22px;
+				}
+
+				&:nth-child(3) {
+					top: 34px;
+				}
+			}
+		}
+
+		.reset {
+			float: right;
+			&:before {
+				content: "X";
+			}
+		}
+	}
+
+	.score {
+		margin-bottom: 40px;
 	}
 }

@@ -5,7 +5,6 @@ var b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,n
 
 var PieceView = function(opts) {
 	this.initialize = function(opts) {
-		console.log("piece");
 		var opts = opts || {};
 		this.w = opts.w/4 || 80;
 		this.x = opts.x || 0;
@@ -113,7 +112,10 @@ var createPiece = function() {
 			});
 		});
 		if(!alive) {
-			alert("No more moves. Your score is "+Session.get('original-score'));
+			var $p = $el.parent();
+			$p.find('.game-over-menu h1').html("You scored "+Session.get('original-score')+"!");
+			$p.addClass('game-over');
+			// alert("No more moves. Your score is "+Session.get('original-score'));
 		}
 	}
 	// this.values = [];
@@ -260,6 +262,7 @@ var keyAction = function(e) {
 
 Template.originalGame.created = function() {
 	Session.set('original-score', 0);
+	if(!Session.get('original-high-score')) Session.set('original-high-score',0);
 };
 
 Template.originalGame.rendered = function() {
@@ -278,11 +281,36 @@ Template.originalGame.helpers({
 	score: function() {
 		return Session.get('original-score');
 	},
+	high: function() {
+		return Session.get('original-high-score');
+	},
 	title: function() {
 		return "Slide - Original";
 	}
 });
 
 Template.originalGame.events({
-
+	'click .reset-menu .yes, click .game-over-menu .yes': function() {
+		Session.set('original-high-score', Math.max(Session.get('original-score'),Session.get('original-high-score')));
+		Session.set('original-score', 0);
+		_.each(b, function(c) {
+			_.each(c, function(d) {
+				d && d.destroy();
+			});
+		});
+		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+		createPiece();
+	},
+	'click .reset-menu li': function() {
+		$el.parent().removeClass('reset-open');
+	},
+	'click .reset': function() {
+		$el.parent().addClass('reset-open');
+	},
+	'click .game-over-menu li': function() {
+		$el.parent().removeClass('game-over');
+	},
+	'click .game-over-menu .no': function() {
+		$('body').removeClass('original');
+	}
 });
