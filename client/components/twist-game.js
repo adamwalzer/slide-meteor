@@ -92,7 +92,6 @@ var createPiece = function() {
 		// opts.z = Math.min.apply(null,this.values);
 		opts.z = Math.floor(Math.random()*2*.75+1)*2;
 		// opts.z = 2;
-		move++;
 		updateScore(opts.z);
 		b[opts.x][opts.y] = new PieceView(opts);
 		$el.find('>div span').css({
@@ -102,6 +101,7 @@ var createPiece = function() {
 			'transform' : 'translateX(-50%) translateY(-50%) rotate('+ -degrees +'deg)'
 		});
 		_.delay(function() {
+			fall(0);
 			fall(0);
 		}, 100);
 	}
@@ -169,6 +169,7 @@ var spinPieces = function() {
 };
 
 var fall = function(create) {
+	move++;
 	create = create || 0;
 	var twist = (degrees/90%4+4)%4;
 	switch(twist) {
@@ -314,6 +315,7 @@ var keyAction = function(e) {
 
 Template.twistGame.created = function() {
 	Session.set('twist-score', 0);
+	if(getCookie('twist-high-score')) Session.set('twist-high-score',getCookie('twist-high-score'));
 	if(!Session.get('twist-high-score')) Session.set('twist-high-score',0);
 };
 
@@ -340,7 +342,8 @@ Template.twistGame.helpers({
 
 Template.twistGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		Session.set('twist-high-score', Math.max(Session.get('twist-score'),Session.get('twist-high-score')));
+		var high = Math.max(Session.get('twist-score'),Session.get('twist-high-score'));
+		setCookie('twist-high-score',high)
 		Session.set('twist-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {

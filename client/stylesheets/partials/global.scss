@@ -13,6 +13,7 @@ body {
 	position: relative;
 	color: $color1;
 	font-size: 32px;
+	font-family: $sans;
 
 	&.original {
 		.original-game {
@@ -31,6 +32,18 @@ body {
 			top: 0;
 		}
 	}
+
+	&.clear {
+		.clear-game {
+			top: 0;
+		}
+	}
+
+	&.combine {
+		.combine-game {
+			top: 0;
+		}
+	}
 }
 
 a {
@@ -44,7 +57,6 @@ a {
 
 h1 {
 	font-size: 54px;
-	margin-bottom: 40px;
 	color: $color1;
 }
 
@@ -54,7 +66,7 @@ ul {
 	li {
 		display: block;
 		background-color: $grey;
-		border-radius: 20px;
+		border-radius: 10px;
 		margin-bottom: 20px;
 		font-size: 32px;
 

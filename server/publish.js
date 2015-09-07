@@ -19,3 +19,7 @@
 // Meteor.publish('messages', function() {
 // 	return Messages.find({}, { sort: { time: 1}});
 // });
+
+// Meteor.publish('users', function() {
+// 	return Users.find();
+// });

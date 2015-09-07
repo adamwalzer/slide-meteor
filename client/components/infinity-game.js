@@ -261,6 +261,7 @@ var keyAction = function(e) {
 
 Template.infinityGame.created = function() {
 	Session.set('infinity-score', 0);
+	if(getCookie('infinity-high-score')) Session.set('infinity-high-score',getCookie('infinity-high-score'));
 	if(!Session.get('infinity-high-score')) Session.set('infinity-high-score',0);
 };
 
@@ -289,7 +290,8 @@ Template.infinityGame.helpers({
 
 Template.infinityGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		Session.set('infinity-high-score', Math.max(Session.get('infinity-score'),Session.get('infinity-high-score')));
+		var high = Math.max(Session.get('infinity-score'),Session.get('infinity-high-score'));
+		setCookie("infinity-high-score",high);
 		Session.set('infinity-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {

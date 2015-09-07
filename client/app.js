@@ -8,6 +8,22 @@
 //   }
 // });
 
+setCookie = function(name, value) {
+  Session.set(name,value);
+  document.cookie = name + "=" + value + ";";
+}
+
+getCookie = function(name) {
+    var name = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+};
+
 Meteor.autorun(function() {
   /**
  * jQuery Plugin to obtain touch gestures from iPhone, iPod Touch and iPad, should also work with Android mobile phones (not tested yet!)

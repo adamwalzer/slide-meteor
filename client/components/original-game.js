@@ -262,6 +262,7 @@ var keyAction = function(e) {
 
 Template.originalGame.created = function() {
 	Session.set('original-score', 0);
+	if(getCookie('original-high-score')) Session.set('original-high-score',getCookie('original-high-score'));
 	if(!Session.get('original-high-score')) Session.set('original-high-score',0);
 };
 
@@ -291,7 +292,8 @@ Template.originalGame.helpers({
 
 Template.originalGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		Session.set('original-high-score', Math.max(Session.get('original-score'),Session.get('original-high-score')));
+		var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
+		setCookie('original-high-score',high)
 		Session.set('original-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {
