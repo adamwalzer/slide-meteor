@@ -83,7 +83,7 @@ var createPiece = function(n) {
 	if(!n && spaces.length === 16) {
 		// Session.set('clear-high-score', Math.min(Session.get('clear-score'),Session.get('clear-high-score')));
 		var low = Math.min(Session.get('clear-score'),Session.get('clear-high-score'));
-		setCookie('clear-high-score',low);
+		setVar('clear-high-score',low);
 
 		var $p = $el.parent();
 		$p.find('.game-over-menu h1').html("You scored " + Session.get('clear-score') + "!");
@@ -279,7 +279,7 @@ var keyAction = function(e) {
 
 Template.clearGame.created = function() {
 	Session.set('clear-score', 0);
-	if(getCookie('clear-high-score')) Session.set('clear-high-score',getCookie('clear-high-score'));
+	if(getVar('clear-high-score')) Session.set('clear-high-score',getVar('clear-high-score'));
 	if(!Session.get('clear-high-score')) Session.set('clear-high-score',10000);
 };
 

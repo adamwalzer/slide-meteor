@@ -1,5 +1,5 @@
 var $el;
-var move = 0;
+var move = 1;
 var mx = 0;
 var moving = false;
 var values = [1];
@@ -318,7 +318,7 @@ var afterMove = function(moved) {
 	if(moved) mx=0;
 	move++;
 	moving = false;
-	if(mx>=9) {
+	if(mx>=11) {
 		var $p = $el.parent();
 		$p.find('.game-over-menu h1').html("You scored "+Session.get('combine-score')+"!");
 		$p.addClass('game-over');
@@ -337,7 +337,7 @@ var keyAction = function(e) {
 
 Template.combineGame.created = function() {
 	Session.set('combine-score', 0);
-	if(getCookie('combine-high-score')) Session.set('combine-high-score',getCookie('combine-high-score'));
+	if(getVar('combine-high-score')) Session.set('combine-high-score',getVar('combine-high-score'));
 	if(!Session.get('combine-high-score')) Session.set('combine-high-score',0);
 };
 
@@ -367,7 +367,7 @@ Template.combineGame.helpers({
 Template.combineGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
 		var high = Math.max(Session.get('combine-score'),Session.get('combine-high-score'));
-		setCookie("combine-high-score",high);
+		setVar("combine-high-score",high);
 		Session.set('combine-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {

@@ -8,10 +8,19 @@
 //   }
 // });
 
+setVar = function(name, value) {
+  Session.set(name,value);
+  localStorage.setItem(name,value);
+};
+
+getVar =  function(name) {
+  return localStorage.getItem(name);
+};
+
 setCookie = function(name, value) {
   Session.set(name,value);
   document.cookie = name + "=" + value + ";";
-}
+};
 
 getCookie = function(name) {
     var name = name + "=";

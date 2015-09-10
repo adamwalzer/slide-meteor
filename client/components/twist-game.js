@@ -315,7 +315,7 @@ var keyAction = function(e) {
 
 Template.twistGame.created = function() {
 	Session.set('twist-score', 0);
-	if(getCookie('twist-high-score')) Session.set('twist-high-score',getCookie('twist-high-score'));
+	if(getVar('twist-high-score')) Session.set('twist-high-score',getVar('twist-high-score'));
 	if(!Session.get('twist-high-score')) Session.set('twist-high-score',0);
 };
 
@@ -343,7 +343,7 @@ Template.twistGame.helpers({
 Template.twistGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
 		var high = Math.max(Session.get('twist-score'),Session.get('twist-high-score'));
-		setCookie('twist-high-score',high)
+		setVar('twist-high-score',high)
 		Session.set('twist-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {
