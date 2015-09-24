@@ -34,7 +34,8 @@ getCookie = function(name) {
 };
 
 Meteor.autorun(function() {
-  /**
+
+/**
  * jQuery Plugin to obtain touch gestures from iPhone, iPod Touch and iPad, should also work with Android mobile phones (not tested yet!)
  * Common usage: wipe images (left and right to show the previous or next image)
  * 
@@ -116,6 +117,36 @@ Meteor.autorun(function() {
    };
  
  })(jQuery);
+
+highScoreTemplate = function(opts) {
+  var t = opts.title || "original";
+  var m = opts.max || 0;
+  var n = opts.min || 0;
+  this.rendered = function() {
+    $(document).on('keydown', keyAction);
+    $('.'+t+'-high-scores .high-scores').touchswipe({
+      swipeLeft: left,
+      swipeRight: right
+    });
+  };
+  var left = function() {
+    n = 1 - $('.'+t+'-high-scores .high-scores li').length;
+    m = Math.max(m-1,n);
+    $('.'+t+'-high-scores .high-scores').css({'margin-left':(m*100)+"%"});
+  };
+  var right = function() {
+    m = Math.min(m+1,0);
+    $('.'+t+'-high-scores .high-scores').css({'margin-left':(m*100)+"%"});
+  };
+  var keyAction = function(e) {
+    if($('body').hasClass(t+'-high')) {
+      var code = e.keyCode || e.which;
+      if(code === 37) left();
+      else if(code === 39) right();
+    }
+  };
+};
+
   // Whenever this session variable changes, run this function.
   // var displayMessage = Session.get('displayMessage');
   // if (displayMessage) {

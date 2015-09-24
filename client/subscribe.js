@@ -17,3 +17,5 @@
 // 	console.log(Session.get("userId"));
 // 	console.log(localUser.find({_id:Session.get("userId")}).fetch()[0]);
 // }
+
+Meteor.subscribe("high-scores");

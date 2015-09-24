@@ -44,11 +44,24 @@ body {
 			top: 0;
 		}
 	}
+
+	&.options {
+		.option-panel {
+			top: 0;
+		}
+	}
+
+	&.original-high {
+		.original-high-scores {
+			top: 0;
+		}
+	}
 }
 
 a {
 	text-decoration: none;
 	color: inherit;
+	cursor: pointer;
 }
 
 .wrapper {
@@ -75,7 +88,7 @@ ul {
 			display: block;
 		}
 
-		@for $i from 1 through 6 {
+		@for $i from 1 through 8 {
 			$c: calc-color($i);
 			&:nth-child(#{$i}) {
 				background-color: rgba($c,.4);

@@ -23,3 +23,7 @@
 // Meteor.publish('users', function() {
 // 	return Users.find();
 // });
+
+Meteor.publish('high-scores', function() {
+	return HighScores.find({userId: this.userId}, {sort: {score: -1}});
+});

@@ -1,0 +1,29 @@
+ul.high-scores {
+	padding: 0;
+	font-size: 0;
+	width: auto;
+	white-space: nowrap;
+	@include clearfix;
+	@include transition(margin $fast);
+
+	li {
+		background: transparent;
+		padding: 0 20px;
+		width: 100vw;
+		display: inline-block;
+	}
+
+	.score {
+		width: 50%;
+		margin: 0 auto 40px;
+	}
+
+	.board {
+		@include clearfix;
+
+		> div {
+			position: relative;
+			float: left;
+		}
+	}
+}

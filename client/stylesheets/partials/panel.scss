@@ -1,0 +1,10 @@
+.panel {
+	width: 100vw;
+	height: 100vh;
+	background-color: $light-grey;
+	position: absolute;
+	left: 0;
+	top: 100vh;
+	@include transition(top $fast);
+	overflow: hidden;
+}

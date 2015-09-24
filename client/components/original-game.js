@@ -260,6 +260,19 @@ var keyAction = function(e) {
 	}
 };
 
+var setNewHigh = function() {
+	var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
+	setVar('original-high-score',high);
+
+	console.log(b);
+
+	Meteor.call('addHighScore', {
+		game: "original",
+		score: Session.get('original-score'),
+		board: b
+	});
+}
+
 Template.originalGame.created = function() {
 	Session.set('original-score', 0);
 	if(getVar('original-high-score')) Session.set('original-high-score',getVar('original-high-score'));
@@ -292,8 +305,7 @@ Template.originalGame.helpers({
 
 Template.originalGame.events({
 	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
-		setVar('original-high-score',high)
+		setNewHigh();
 		Session.set('original-score', 0);
 		_.each(b, function(c) {
 			_.each(c, function(d) {
@@ -302,6 +314,9 @@ Template.originalGame.events({
 		});
 		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
 		createPiece();
+	},
+	'click .reset-menu .no, click .game-over-menu .no': function() {
+		setNewHigh();
 	},
 	'click .reset-menu li': function() {
 		$el.parent().removeClass('reset-open');
