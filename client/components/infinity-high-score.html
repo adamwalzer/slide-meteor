@@ -1,0 +1,30 @@
+<template name="infinityHighScores">
+	<div class="infinity-high-scores panel">
+		<ul>
+			<li>
+				<a href="options">back to options</a>
+			</li>
+		</ul>
+		<ul class="high-scores">
+			{{#each highScores}}
+				<li>
+					<div class="score">
+						<span>
+							score
+							{{score}}
+						</span>
+					</div>
+					<div class="board">
+						{{#each board}}
+							{{#each this}}
+								<div val="{{this}}">
+									<span>{{this}}</span>
+								</div>
+							{{/each}}
+						{{/each}}
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>
