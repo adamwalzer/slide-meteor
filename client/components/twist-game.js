@@ -313,6 +313,28 @@ var keyAction = function(e) {
 	}
 };
 
+var setNewHigh = function(resetBoard) {
+	var high = Math.max(Session.get('twist-score'),Session.get('twist-high-score'));
+	setVar('twist-high-score',high);
+
+	Meteor.call('addHighScore', {
+		game: "twist",
+		score: Session.get('twist-score'),
+		board: b
+	}, function() {
+		if(resetBoard) {
+			Session.set('twist-score', 0);
+			_.each(b, function(c) {
+				_.each(c, function(d) {
+					d && d.destroy();
+				});
+			});
+			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+			createPiece();
+		}
+	});
+};
+
 Template.twistGame.created = function() {
 	Session.set('twist-score', 0);
 	if(getVar('twist-high-score')) Session.set('twist-high-score',getVar('twist-high-score'));
@@ -333,6 +355,8 @@ Template.twistGame.helpers({
 		return Session.get('twist-score');
 	},
 	high: function() {
+		var highs = HighScores.find({game:'twist'},{limit:1,sort:{score:-1}}).fetch();
+		if(highs[0]) setVar('twist-high-score',Math.max(Session.get('twist-high-score'),highs[0].score));
 		return Session.get('twist-high-score');
 	},
 	title: function() {
@@ -341,25 +365,15 @@ Template.twistGame.helpers({
 });
 
 Template.twistGame.events({
-	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		var high = Math.max(Session.get('twist-score'),Session.get('twist-high-score'));
-		setVar('twist-high-score',high)
-		Session.set('twist-score', 0);
-		_.each(b, function(c) {
-			_.each(c, function(d) {
-				d && d.destroy();
-			});
-		});
-		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
-		createPiece();
-	},
-	'click .reset-menu li': function() {
+	'click .reset-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('reset-open');
 	},
 	'click .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
-	'click .game-over-menu li': function() {
+	'click .game-over-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
 	'click .game-over-menu .no': function() {

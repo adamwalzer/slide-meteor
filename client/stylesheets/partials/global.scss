@@ -15,46 +15,19 @@ body {
 	font-size: 32px;
 	font-family: $sans;
 
-	&.original {
-		.original-game {
-			top: 0;
-		}
-	}
-
-	&.infinity {
-		.infinity-game {
-			top: 0;
-		}
-	}
-
-	&.twist {
-		.twist-game {
-			top: 0;
-		}
-	}
-
-	&.clear {
-		.clear-game {
-			top: 0;
-		}
-	}
-
-	&.combine {
-		.combine-game {
-			top: 0;
-		}
-	}
-
-	&.options {
-		.option-panel {
-			top: 0;
-		}
-	}
-
-	&.original-high {
-		.original-high-scores {
-			top: 0;
-		}
+	&.original .original-game,
+	&.infinity .infinity-game,
+	&.twist .twist-game,
+	&.clear .clear-game,
+	&.combine .combine-game,
+	&.options .option-panel,
+	&.original-high .original-high-scores,
+	&.infinity-high .infinity-high-scores,
+	&.twist-high .twist-high-scores,
+	&.clear-high .clear-high-scores,
+	&.combine-high .combine-high-scores
+	{
+		top: 0;
 	}
 }
 
@@ -74,7 +47,7 @@ h1 {
 }
 
 ul {
-	padding: 20px;
+	padding: 0 20px;
 
 	li {
 		display: block;

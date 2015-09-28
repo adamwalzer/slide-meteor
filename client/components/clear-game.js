@@ -3,6 +3,8 @@ var move = 0;
 var moving = false;
 var values = [];
 var b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+var originalB = Array(Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}));
+var gameOver = false;
 
 var PieceView = function(opts) {
 	this.initialize = function(opts) {
@@ -63,6 +65,7 @@ var updateScore = function(z) {
 }
 
 var createPiece = function(n) {
+	if(gameOver) return;
 	var spaces = [];
 	// for(var i=0;i<4;i++) {
 	// 	for(var j=0;j<4;j++) {
@@ -81,9 +84,21 @@ var createPiece = function(n) {
 		});
 	});
 	if(!n && spaces.length === 16) {
+		gameOver = true;
 		// Session.set('clear-high-score', Math.min(Session.get('clear-score'),Session.get('clear-high-score')));
 		var low = Math.min(Session.get('clear-score'),Session.get('clear-high-score'));
 		setVar('clear-high-score',low);
+
+		Meteor.call('addHighScore', {
+			game: "clear",
+			score: Session.get('clear-score'),
+			board: originalB,
+			// board: b,
+			sort: 1,
+			compare: function(score, highScore) {
+				return (score < highScore);
+			}
+		});
 
 		var $p = $el.parent();
 		$p.find('.game-over-menu h1').html("You scored " + Session.get('clear-score') + "!");
@@ -102,6 +117,9 @@ var createPiece = function(n) {
 			move++;
 			// updateScore(opts.z);
 			b[opts.x][opts.y] = new PieceView(opts);
+			if(typeof n == "number") {
+				originalB[opts.x][opts.y] = {v:opts.z};
+			}
 		}
 		if(spaces.length === 1) {
 			var alive = false;
@@ -120,6 +138,7 @@ var createPiece = function(n) {
 				});
 			});
 			if(!alive) {
+				gameOver = true;
 				var $p = $el.parent();
 				$p.find('.game-over-menu h1').html("You couldn't clear the board");
 				$p.addClass('game-over');
@@ -129,11 +148,24 @@ var createPiece = function(n) {
 			createPiece(n-1);
 		} else {
 			values = [];
+			// if(originalB == null) {
+			// 	originalB = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+			// 	for(var i=0;i<4;i++) {
+			// 		for(var j=0;j<4;j++) {
+			// 			if(b[i][j]) {
+			// 				originalB[i][j] = {v: b[i][j].v};
+			// 			}
+			// 		}
+			// 	}
+			// }
 		}
+		// moving = false;
 	}
 };
 
 var renderGame = function() {
+	gameOver = false;
+	originalB =  Array(Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}));
 	createPiece(10);
 };
 
@@ -258,6 +290,7 @@ var down = function() {
 }
 
 var afterMove = function(moved) {
+	if(gameOver) return;
 	updateScore(1);
 	if(moved) {
 		_.delay(function() {
@@ -274,6 +307,19 @@ var keyAction = function(e) {
 		else if(code === 38) up();
 		else if(code === 39) right();
 		else if(code === 40) down();
+	}
+};
+
+var setNewHigh = function(resetBoard) {
+	if(resetBoard) {
+		Session.set('clear-score', 0);
+		_.each(b, function(c) {
+			_.each(c, function(d) {
+				d && d.destroy();
+			});
+		});
+		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+		renderGame();
 	}
 };
 
@@ -299,6 +345,8 @@ Template.clearGame.helpers({
 		return Session.get('clear-score');
 	},
 	high: function() {
+		var highs = HighScores.find({game:'clear'},{sort:{score:1},limit:1}).fetch();
+		if(highs[0]) setVar('clear-high-score',Math.min(Session.get('clear-high-score'),highs[0].score));
 		return Session.get('clear-high-score')===10000?"N/A":Session.get('clear-high-score');
 	},
 	title: function() {
@@ -307,24 +355,15 @@ Template.clearGame.helpers({
 });
 
 Template.clearGame.events({
-	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		// Session.set('clear-high-score', Math.max(Session.get('clear-score'),Session.get('clear-high-score')));
-		Session.set('clear-score', 0);
-		_.each(b, function(c) {
-			_.each(c, function(d) {
-				d && d.destroy();
-			});
-		});
-		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
-		renderGame();
-	},
-	'click .reset-menu li': function() {
+	'click .reset-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('reset-open');
 	},
 	'click .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
-	'click .game-over-menu li': function() {
+	'click .game-over-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
 	'click .game-over-menu .no': function() {

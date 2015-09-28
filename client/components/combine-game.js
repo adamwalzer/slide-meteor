@@ -335,6 +335,32 @@ var keyAction = function(e) {
 	}
 };
 
+
+var setNewHigh = function(resetBoard) {
+	var high = Math.max(Session.get('combine-score'),Session.get('combine-high-score'));
+	setVar('combine-high-score',high);
+
+	Meteor.call('addHighScore', {
+		game: "combine",
+		score: Session.get('combine-score'),
+		board: b
+	}, function() {
+		if(resetBoard) {
+			var high = Math.max(Session.get('combine-score'),Session.get('combine-high-score'));
+			setVar("combine-high-score",high);
+			Session.set('combine-score', 0);
+			_.each(b, function(c) {
+				_.each(c, function(d) {
+					d && d.destroy();
+				});
+			});
+			values = [1];
+			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+			renderGame();
+		}
+	});
+};
+
 Template.combineGame.created = function() {
 	Session.set('combine-score', 0);
 	if(getVar('combine-high-score')) Session.set('combine-high-score',getVar('combine-high-score'));
@@ -357,6 +383,8 @@ Template.combineGame.helpers({
 		return Session.get('combine-score');
 	},
 	high: function() {
+		var highs = HighScores.find({game:'combine'},{limit:1,sort:{score:-1}}).fetch();
+		if(highs[0]) setVar('combine-high-score',Math.max(Session.get('combine-high-score'),highs[0].score));
 		return Session.get('combine-high-score');
 	},
 	title: function() {
@@ -365,26 +393,15 @@ Template.combineGame.helpers({
 });
 
 Template.combineGame.events({
-	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		var high = Math.max(Session.get('combine-score'),Session.get('combine-high-score'));
-		setVar("combine-high-score",high);
-		Session.set('combine-score', 0);
-		_.each(b, function(c) {
-			_.each(c, function(d) {
-				d && d.destroy();
-			});
-		});
-		values = [1];
-		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
-		renderGame();
-	},
-	'click .reset-menu li': function() {
+	'click .reset-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('reset-open');
 	},
 	'click .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
-	'click .game-over-menu li': function() {
+	'click .game-over-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
 	'click .game-over-menu .no': function() {

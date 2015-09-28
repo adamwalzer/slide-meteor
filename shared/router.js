@@ -1,6 +1,6 @@
 Router.configure({
 	layoutTemplate: 'layout',
-	onBeforeAction: function () {
+	onBeforeAction: function() {
 		this.next();
 	}
 });

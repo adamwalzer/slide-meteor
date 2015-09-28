@@ -13,6 +13,6 @@ Template[opts.title+'HighScores'].rendered = function() {
 
 Template[opts.title+'HighScores'].helpers({
 	highScores: function() {
-		return HighScores.find({game: opts.title}, {sort: {score: opts.sort}, limit:opts.limit});
+		return HighScores.find({game: opts.title}, {sort: {score: opts.sort}});
 	}
 });

@@ -3,9 +3,13 @@ Meteor.methods({
 	// 	// method body
 	// },
 	addHighScore: function(opts) {
-		var highs = HighScores.find({userId:this.userId, game:opts.game}, {limit:5, sort: {score: -1}}).fetch();
-
+		var sortBy = opts.sort || -1;
+		var compare = opts.compare || function(s,h) {
+			return (s > h);
+		};
 		var board = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+		var highs = HighScores.find({userId:this.userId, game:opts.game}, {sort: {score: sortBy}}).fetch();
+
 		for(var i=0;i<4;i++) {
 			for(var j=0;j<4;j++) {
 				if(opts.board[i][j]) {
@@ -21,18 +25,13 @@ Meteor.methods({
 				score: opts.score,
 				board: board
 			});
+		} else if(highs[4] && highs[4]._id && highs[4].score) {
+			if(compare(opts.score,highs[4].score)) {
+				HighScores.update(highs[4]._id, {$set: {
+					score: opts.score,
+					board: board
+				}});
+			}
 		}
-		// else {
-		// 	_.each(highs, function() {
-		// 		if(opts.score > this.score) {
-		// 			HighScores.insert({
-		// 				game: opts.game,
-		// 				score: opts.score,
-		// 				board: opts.board
-		// 			});
-		// 			return;
-		// 		}
-		// 	});
-		// }
 	}
 });

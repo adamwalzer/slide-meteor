@@ -2,7 +2,7 @@
 // New .scss and .sass files will be automatically '@import'ed  at the bottom
 // Existing content in the file will not be touched
 // When deleting a .scss or .sass file you must manually delete it from here
-@import ".meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/bourbon";
+@import "client/stylesheets/bourbon/bourbon";
 @import "client/stylesheets/partials/reset.scss";
 @import "client/stylesheets/partials/fonts.scss";
 @import "client/stylesheets/partials/variables.scss";

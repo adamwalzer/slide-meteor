@@ -260,18 +260,27 @@ var keyAction = function(e) {
 	}
 };
 
-var setNewHigh = function() {
+var setNewHigh = function(resetBoard) {
 	var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
 	setVar('original-high-score',high);
-
-	console.log(b);
 
 	Meteor.call('addHighScore', {
 		game: "original",
 		score: Session.get('original-score'),
 		board: b
+	}, function() {
+		if(resetBoard) {
+			Session.set('original-score', 0);
+			_.each(b, function(c) {
+				_.each(c, function(d) {
+					d && d.destroy();
+				});
+			});
+			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+			createPiece();
+		}
 	});
-}
+};
 
 Template.originalGame.created = function() {
 	Session.set('original-score', 0);
@@ -296,6 +305,8 @@ Template.originalGame.helpers({
 		return Session.get('original-score');
 	},
 	high: function() {
+		var highs = HighScores.find({game:'original'},{limit:1,sort:{score:-1}}).fetch();
+		if(highs[0]) setVar('original-high-score',Math.max(Session.get('original-high-score'),highs[0].score));
 		return Session.get('original-high-score');
 	},
 	title: function() {
@@ -304,27 +315,15 @@ Template.originalGame.helpers({
 });
 
 Template.originalGame.events({
-	'click .reset-menu .yes, click .game-over-menu .yes': function() {
-		setNewHigh();
-		Session.set('original-score', 0);
-		_.each(b, function(c) {
-			_.each(c, function(d) {
-				d && d.destroy();
-			});
-		});
-		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
-		createPiece();
-	},
-	'click .reset-menu .no, click .game-over-menu .no': function() {
-		setNewHigh();
-	},
-	'click .reset-menu li': function() {
+	'click .reset-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('reset-open');
 	},
 	'click .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
-	'click .game-over-menu li': function() {
+	'click .game-over-menu li': function(e) {
+		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
 	'click .game-over-menu .no': function() {

@@ -15,7 +15,7 @@ ul.high-scores {
 
 	.score {
 		width: 50%;
-		margin: 0 auto 40px;
+		margin: 20px auto 40px;
 	}
 
 	.board {
@@ -24,6 +24,25 @@ ul.high-scores {
 		> div {
 			position: relative;
 			float: left;
+		}
+	}
+}
+
+&.infinity-high-scores, &.clear-high-scores, &.combine-high-scores {
+
+	ul.high-scores {
+
+		.board {
+
+			> div {
+				@for $i from 1 through 100 {
+					$c: calc-color(($i - 1) % 16 + 1);
+					&[val="#{$i}"] {
+						background-color: rgba($c,.4);
+						color: $c;
+					}
+				}
+			}
 		}
 	}
 }
