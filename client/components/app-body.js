@@ -1,6 +1,8 @@
 Template.appBody.events({
 	'click a': function(e) {
 		e.preventDefault();
-		$('body').attr('class',($(e.currentTarget).attr('href')));
+		var href = $(e.currentTarget).attr('href');
+		$('body').attr('class',href);
+		ga('send', 'click-'+href);
 	}
 });

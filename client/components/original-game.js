@@ -112,6 +112,7 @@ var createPiece = function() {
 			});
 		});
 		if(!alive) {
+			moving = true;
 			var $p = $el.parent();
 			$p.find('.game-over-menu h1').html("You scored "+Session.get('original-score')+"!");
 			$p.addClass('game-over');
@@ -276,6 +277,7 @@ var setNewHigh = function(resetBoard) {
 					d && d.destroy();
 				});
 			});
+			moving = false;
 			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
 			createPiece();
 		}

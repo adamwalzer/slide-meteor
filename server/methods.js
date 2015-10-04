@@ -13,7 +13,7 @@ Meteor.methods({
 		for(var i=0;i<4;i++) {
 			for(var j=0;j<4;j++) {
 				if(opts.board[i][j]) {
-					board[i][j] = opts.board[i][j].v;
+					board[j][i] = opts.board[i][j].v;
 				}
 			}
 		}

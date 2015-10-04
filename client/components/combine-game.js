@@ -113,6 +113,7 @@ var createPiece = function(n) {
 			});
 		});
 		if(!alive) {
+			moving = true;
 			var $p = $el.parent();
 			$p.find('.game-over-menu h1').html("You scored "+Session.get('combine-score')+"!");
 			$p.addClass('game-over');
@@ -319,6 +320,7 @@ var afterMove = function(moved) {
 	move++;
 	moving = false;
 	if(mx>=11) {
+		moving = true;
 		var $p = $el.parent();
 		$p.find('.game-over-menu h1').html("You scored "+Session.get('combine-score')+"!");
 		$p.addClass('game-over');
@@ -355,6 +357,7 @@ var setNewHigh = function(resetBoard) {
 				});
 			});
 			values = [1];
+			moving = false;
 			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
 			renderGame();
 		}

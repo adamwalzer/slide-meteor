@@ -111,6 +111,7 @@ var createPiece = function() {
 			});
 		});
 		if(!alive) {
+			moving = true;
 			var $p = $el.parent();
 			$p.find('.game-over-menu h1').html("You scored "+Session.get('infinity-score')+"!");
 			$p.addClass('game-over');
@@ -276,6 +277,7 @@ var setNewHigh = function(resetBoard) {
 				});
 			});
 			values = [1];
+			moving = false;
 			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
 			createPiece();
 		}

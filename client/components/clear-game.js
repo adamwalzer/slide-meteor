@@ -138,6 +138,7 @@ var createPiece = function(n) {
 				});
 			});
 			if(!alive) {
+				moving = true;
 				gameOver = true;
 				var $p = $el.parent();
 				$p.find('.game-over-menu h1').html("You couldn't clear the board");
@@ -165,6 +166,7 @@ var createPiece = function(n) {
 
 var renderGame = function() {
 	gameOver = false;
+	moving = false;
 	originalB =  Array(Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}),Array({v:0},{v:0},{v:0},{v:0}));
 	createPiece(10);
 };
