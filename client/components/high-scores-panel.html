@@ -1,0 +1,26 @@
+<template name="highScoresPanel">
+	<div class="high-scores-panel panel">
+		<ul class="options-list">
+			{{#if currentUser}}
+				<li>
+					<a href="original-high">original high scores</a>
+				</li>
+				<li>
+					<a href="infinity-high">infinity high scores</a>
+				</li>
+				<li>
+					<a href="twist-high">twist high score</a>
+				</li>
+				<li>
+					<a href="clear-high">clear low scores</a>
+				</li>
+				<li>
+					<a href="combine-high">combine high scores</a>
+				</li>
+			{{/if}}
+			<li>
+				<a href="options">back to options</a>
+			</li>
+		</ul>
+	</div>
+</template>
