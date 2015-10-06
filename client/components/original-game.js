@@ -265,6 +265,9 @@ var setNewHigh = function(resetBoard) {
 	var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
 	setVar('original-high-score',high);
 
+	console.log("new high");
+	console.log(Meteor.userId());
+
 	if(Meteor.userId()) {
 		Meteor.call('addHighScore', {
 			game: "original",
@@ -337,6 +340,7 @@ Template.originalGame.events({
 		$el.parent().addClass('reset-open');
 	},
 	'click .game-over-menu li': function(e) {
+		console.log("game over click");
 		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
