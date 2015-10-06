@@ -336,11 +336,11 @@ Template.originalGame.events({
 	'click .reset, touchstart .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
-	'click .game-over-menu li': function(e) {
+	'click .game-over-menu li, touchstart .game-over-menu li': function(e) {
 		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('game-over');
 	},
-	'click .game-over-menu .no': function() {
+	'click .game-over-menu .no, touchstart .game-over-menu .no': function() {
 		$('body').removeClass('original');
 	}
 });
