@@ -1,0 +1,73 @@
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+body {
+	text-align: center;
+	position: relative;
+	color: $color1;
+	font-size: 32px;
+	font-family: $sans;
+
+	&.original .original-game,
+	&.infinity .infinity-game,
+	&.twist .twist-game,
+	&.clear .clear-game,
+	&.combine .combine-game,
+	&.options .option-panel,
+	&.high-scores .high-scores-panel,
+	&.original-high .original-high-scores,
+	&.infinity-high .infinity-high-scores,
+	&.twist-high .twist-high-scores,
+	&.clear-high .clear-high-scores,
+	&.combine-high .combine-high-scores
+	{
+		top: 0;
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+.wrapper {
+	@include wrapper;
+}
+
+h1 {
+	font-size: 54px;
+	color: $color1;
+}
+
+ul {
+	padding: 0 20px;
+
+	li {
+		display: block;
+		background-color: $grey;
+		border-radius: 10px;
+		margin-bottom: 20px;
+		font-size: 32px;
+
+		a {
+			padding: 15px;
+			display: block;
+		}
+
+		@for $i from 1 through 8 {
+			$c: calc-color($i);
+			&:nth-child(#{$i}) {
+				background-color: rgba($c,.4);
+				color: $c;
+			}
+		}
+	}
+}
