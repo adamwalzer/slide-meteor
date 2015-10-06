@@ -2,18 +2,18 @@
 // New .scss and .sass files will be automatically '@import'ed  at the bottom
 // Existing content in the file will not be touched
 // When deleting a .scss or .sass file you must manually delete it from here
-@import "client/stylesheets/bourbon/bourbon";
-@import "client/stylesheets/partials/reset.scss";
-@import "client/stylesheets/partials/fonts.scss";
-@import "client/stylesheets/partials/variables.scss";
-@import "client/stylesheets/partials/mixins.scss";
-@import "client/stylesheets/partials/functions.scss";
+@import "bourbon/bourbon.scss";
+@import "partials/reset.scss";
+@import "partials/fonts.scss";
+@import "partials/variables.scss";
+@import "partials/mixins.scss";
+@import "partials/functions.scss";
 
-@import "client/stylesheets/partials/global.scss";
+@import "partials/global.scss";
 
-@import "client/stylesheets/partials/welcome.scss";
-@import "client/stylesheets/partials/game.scss";
-@import "client/stylesheets/partials/score.scss";
-@import "client/stylesheets/partials/board.scss";
-@import "client/stylesheets/partials/panel.scss";
-@import "client/stylesheets/partials/high-scores.scss";
+@import "partials/welcome.scss";
+@import "partials/game.scss";
+@import "partials/score.scss";
+@import "partials/board.scss";
+@import "partials/panel.scss";
+@import "partials/high-scores.scss";
