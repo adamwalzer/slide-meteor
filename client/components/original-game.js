@@ -265,23 +265,35 @@ var setNewHigh = function(resetBoard) {
 	var high = Math.max(Session.get('original-score'),Session.get('original-high-score'));
 	setVar('original-high-score',high);
 
-	Meteor.call('addHighScore', {
-		game: "original",
-		score: Session.get('original-score'),
-		board: b
-	}, function() {
-		if(resetBoard) {
-			Session.set('original-score', 0);
-			_.each(b, function(c) {
-				_.each(c, function(d) {
-					d && d.destroy();
+	if(Meteor.userId()) {
+		Meteor.call('addHighScore', {
+			game: "original",
+			score: Session.get('original-score'),
+			board: b
+		}, function() {
+			if(resetBoard) {
+				Session.set('original-score', 0);
+				_.each(b, function(c) {
+					_.each(c, function(d) {
+						d && d.destroy();
+					});
 				});
+				moving = false;
+				b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+				createPiece();
+			}
+		});
+	} else if(resetBoard) {
+		Session.set('original-score', 0);
+		_.each(b, function(c) {
+			_.each(c, function(d) {
+				d && d.destroy();
 			});
-			moving = false;
-			b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
-			createPiece();
-		}
-	});
+		});
+		moving = false;
+		b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
+		createPiece();
+	}
 };
 
 Template.originalGame.created = function() {
