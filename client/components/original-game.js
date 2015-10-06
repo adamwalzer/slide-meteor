@@ -333,7 +333,7 @@ Template.originalGame.events({
 		setNewHigh($(e.currentTarget).hasClass('yes'));
 		$el.parent().removeClass('reset-open');
 	},
-	'click .reset': function() {
+	'click .reset, touchstart .reset': function() {
 		$el.parent().addClass('reset-open');
 	},
 	'click .game-over-menu li': function(e) {
