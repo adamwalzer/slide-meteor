@@ -147,7 +147,6 @@ var moveTiles = function(Z,d) {
 			for(var j=0; j<4; j++) {
 				for(var i=1.5+.5*d; d*i>d*1.5-2.5; i-=d) {
 					if(getB(i,j)) {
-			// for(var i=2; i>-1; i--) {
 						for(var k=1;k<=1.5+d*1.5-d*i;k++) {
 							if(!getB(i+d*k,j)) {
 								setB(i+d*k,j,getB(i+d*k-d,j)['move'+Z](i+d*k));
@@ -179,126 +178,6 @@ var up = moveTiles('Y',-1);
 var right = moveTiles('X',1);
 
 var down = moveTiles('Y',1);
-
-// var left = function() {
-// 	if(!moving) {
-// 		moving = true;
-// 		var moved = false;
-// 		for(var j=0; j<4; j++) {
-// 			for(var i=1; i<4; i++) {
-// 				if(b[i][j]) {
-// 					for(var k=1;k<=i;k++) {
-// 						if(!b[i-k][j]) {
-// 							b[i-k][j] = b[i-k+1][j].moveX(i-k);
-// 							b[i-k+1][j] = null;
-// 							moved = true;
-// 						} else {
-// 							if(b[i-k][j].move() != move && b[i-k][j].val() === b[i-k+1][j].val()) {
-// 								b[i-k][j].val(2*b[i-k][j].val());
-// 								b[i-k][j].move(move);
-// 								b[i-k+1][j].moveX(b[i-k][j].getX()).destroy();
-// 								b[i-k+1][j] = null;
-// 								moved = true;
-// 							}
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 		afterMove(moved);
-// 	}
-// };
-
-// var up = function() {
-// 	if(!moving) {
-// 		moving = true;
-// 		var moved = false;
-// 		for(var i=0; i<4; i++) {
-// 			for(var j=1; j<4; j++) {
-// 				if(b[i][j]) {
-// 					for(var k=1;k<=j;k++) {
-// 						if(!b[i][j-k]) {
-// 							b[i][j-k] = b[i][j-k+1].moveY(j-k);
-// 							b[i][j-k+1] = null;
-// 							moved = true;
-// 						} else {
-// 							if(b[i][j-k].move() != move && b[i][j-k].val() === b[i][j-k+1].val()) {
-// 								b[i][j-k].val(2*b[i][j-k].val());
-// 								b[i][j-k].move(move);
-// 								b[i][j-k+1].moveY(b[i][j-k].getY()).destroy();
-// 								b[i][j-k+1] = null;
-// 								moved = true;
-// 							}
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 		afterMove(moved);
-// 	}
-// }
-
-// var right = function() {
-// 	if(!moving) {
-// 		moving = true;
-// 		var moved = false;
-// 		for(var j=0; j<4; j++) {
-// 			for(var i=2; i>-1; i--) {
-// 				if(b[i][j]) {
-// 					for(var k=1;k<=3-i;k++) {
-// 						if(!b[i+k][j]) {
-// 							b[i+k][j] = b[i+k-1][j].moveX(i+k);
-// 							b[i+k-1][j] = null;
-// 							moved = true;
-// 						} else {
-// 							if(b[i+k][j].move() != move && b[i+k][j].val() === b[i+k-1][j].val()) {
-// 								b[i+k][j].val(2*b[i+k][j].val());
-// 								b[i+k][j].move(move);
-// 								b[i+k-1][j].moveX(b[i+k][j].getX()).destroy();
-// 								b[i+k-1][j] = null;
-// 								moved = true;
-// 							}
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 		afterMove(moved);
-// 	}
-// };
-
-// var down = function() {
-// 	if(!moving) {
-// 		moving = true;
-// 		var moved = false;
-// 		for(var i=0; i<4; i++) {
-// 			for(var j=2; j>-1; j--) {
-// 				if(b[i][j]) {
-// 					for(var k=1;k<=3-j;k++) {
-// 						if(!b[i][j+k]) {
-// 							b[i][j+k] = b[i][j+k-1].moveY(j+k);
-// 							b[i][j+k-1] = null;
-// 							moved = true;
-// 						} else {
-// 							if(b[i][j+k].move() != move && b[i][j+k].val() === b[i][j+k-1].val()) {
-// 								b[i][j+k].val(2*b[i][j+k].val());
-// 								b[i][j+k].move(move);
-// 								b[i][j+k-1].moveY(b[i][j+k].getY()).destroy();
-// 								b[i][j+k-1] = null;
-// 								moved = true;
-// 							}
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 		afterMove(moved);
-// 	}
-// }
 
 var afterMove = function(moved) {
 	if(moved) {
