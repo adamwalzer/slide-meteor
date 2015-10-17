@@ -8,7 +8,7 @@ var b = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,n
 var PieceView = function(opts) {
 	this.initialize = function(opts) {
 		var opts = opts || {};
-		this.w = opts.w/4 || 80;
+		this.w = opts.w ? 100/opts.w : 25;
 		this.x = opts.x || 0;
 		this.y = opts.y || 0;
 		this.v = opts.z || 2;
@@ -17,7 +17,7 @@ var PieceView = function(opts) {
 		this.render();
 	};
 	this.render = function() {
-		this.$el = $('<div style="left:'+this.x*this.w+'px; top:'+this.y*this.w+'px;"><span></span></div>');
+		this.$el = $('<div style="left:'+this.x*this.w+'%; top:'+this.y*this.w+'%;"><span></span></div>');
 		this.$span = this.$el.find('span');
 		this.val(this.v);
 		$el.append(this.$el);
@@ -37,7 +37,7 @@ var PieceView = function(opts) {
 	};
 	this.moveX = function(nx) {
 		this.x = nx;
-		this.$el.css({'left':nx*this.w+'px'});
+		this.$el.css({'left':nx*this.w+'%'});
 		return this;
 	};
 	this.getY = function() {
@@ -45,7 +45,7 @@ var PieceView = function(opts) {
 	};
 	this.moveY = function(ny) {
 		this.y = ny;
-		this.$el.css({'top':ny*this.w+'px'});
+		this.$el.css({'top':ny*this.w+'%'});
 		return this;
 	};
 	this.destroy = function() {
@@ -87,7 +87,7 @@ var createPiece = function(n) {
 		var l = Math.floor(Math.random()*spaces.length);
 		var space = spaces[l];
 		// spaces.splice(l,1);
-		opts.w = $el.width();
+		opts.w = 4;
 		opts.x = space.x;
 		opts.y = space.y;
 		opts.z = 15;
@@ -131,7 +131,7 @@ var split = function(spaces) {
 		var l = Math.floor(Math.random()*spaces.length);
 		var space = spaces[l];
 		// spaces.splice(l,1);
-		opts.w = $el.width();
+		opts.w = 4;
 		opts.x = space.x;
 		opts.y = space.y;
 		var ps = [];

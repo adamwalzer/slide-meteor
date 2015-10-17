@@ -6,6 +6,21 @@ body, html {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
+	background-color: rgba(calc-color(1),.4);
+	position: relative;
+}
+
+.app-container {
+	width: 100%;
+	height: 100%;
+	max-width: 60vh;
+	max-height: 167vw;
+	background-color: $light-grey;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	@include transform(translateX(-50%) translateY(-50%));
 }
 
 body {
@@ -26,9 +41,23 @@ body {
 	&.infinity-high .infinity-high-scores,
 	&.twist-high .twist-high-scores,
 	&.clear-high .clear-high-scores,
-	&.combine-high .combine-high-scores
+	&.combine-high .combine-high-scores,
+	&.rules .rules-panel,
+	&.original-rules .original-rules-panel,
+	&.infinity-rules .infinity-rules-panel,
+	&.twist-rules .twist-rules-panel,
+	&.clear-rules .clear-rules-panel,
+	&.combine-rules .combine-rules-panel
 	{
 		top: 0;
+	}
+
+	@media(max-width: 370px) {
+		font-size: 28px;
+	}
+
+	@media(max-width: 350px) {
+		font-size: 22px;
 	}
 }
 
@@ -55,7 +84,6 @@ ul {
 		background-color: $grey;
 		border-radius: 10px;
 		margin-bottom: 20px;
-		font-size: 32px;
 
 		a {
 			padding: 15px;
@@ -68,6 +96,24 @@ ul {
 				background-color: rgba($c,.4);
 				color: $c;
 			}
+		}
+
+		&.no-color {
+			background-color: transparent;
+			font-size: 75%;
+		}
+	}
+}
+
+ol {
+	padding: 0 10px;
+
+	li {
+		margin-bottom: 20px;
+		font-size: 24px;
+
+		@media(max-width: 350px) {
+			font-size: 20px;
 		}
 	}
 }

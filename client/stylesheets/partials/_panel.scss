@@ -1,11 +1,11 @@
 .panel {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	background-color: $light-grey;
 	position: absolute;
 	left: 0;
-	top: 100vh;
-	@include transition(top $fast);
+	top: 100%;
+	@include transition(top $slow);
 	overflow: hidden;
 	padding: 20px 0;
 

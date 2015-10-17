@@ -7,7 +7,7 @@ var opts = {
 };
 
 Template[opts.title+'HighScores'].rendered = function() {
-	template = new highScoreTemplate(opts);
+	template = new HighScoreTemplate(opts);
 	template.rendered();
 };
 

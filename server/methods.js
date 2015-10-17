@@ -4,9 +4,11 @@ Meteor.methods({
 	// },
 	addHighScore: function(opts) {
 		var sortBy = opts.sort || -1;
-		var compare = opts.compare || function(s,h) {
-			return (s > h);
-		};
+		var compare = opts.sort === 1 ? function(s,h) {
+				return (s < h);
+			} : function(s,h) {
+				return (s > h);
+			};
 		var board = Array(Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null),Array(null,null,null,null));
 		var highs = HighScores.find({userId:this.userId, game:opts.game}, {sort: {score: sortBy}}).fetch();
 

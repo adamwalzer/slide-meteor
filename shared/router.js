@@ -8,3 +8,7 @@ Router.configure({
 Router.route('/', {
 	template: 'appBody'
 });
+
+Router.route('/(.*)', {
+	template: 'appBody'
+});

@@ -1,15 +1,16 @@
 ul.high-scores {
+	position: relative;
 	padding: 0;
 	font-size: 0;
 	width: auto;
 	white-space: nowrap;
 	@include clearfix;
-	@include transition(margin $fast);
+	@include transition(left $fast);
 
 	li {
 		background: transparent;
 		padding: 0 20px;
-		width: 100vw;
+		width: 100%;
 		display: inline-block;
 	}
 

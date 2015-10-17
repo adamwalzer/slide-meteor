@@ -4,6 +4,7 @@
 	padding-bottom: 100%;
 	background-color: $board-color;
 	position: relative;
+	font-size: 32px;
 
 	> div {
 		position: absolute;
@@ -35,5 +36,9 @@
 			top: 50%;
 			@include transform(translateX(-50%) translateY(-50%));
 		}
+	}
+
+	@media(max-width: 350px) {
+		font-size: 26px;
 	}
 }
